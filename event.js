@@ -6,17 +6,17 @@ reference = function(ref){
 		return false;
 	}
 	
-	//console.log(this);
+	//console.log(ref);
 	
 	try{
 	
 	fs.statSync(os.homedir()+"/.librepod/events/"+ref[0]+".js");
 	
 	var e = require(os.homedir()+"/.librepod/events/"+ref[0]+".js");
-	
+	//console.log(e);
 	for(var q = 1; q < ref.length && e instanceof Object; q++){
 		e = e[ref[q]];
-		//console.log(e);
+		
 	} 
 	
 	if(e instanceof Function){
@@ -35,5 +35,7 @@ reference = function(ref){
 call = function(ref){
 	return reference.call({dir:"/.librepod/events/"},ref);
 }
+
+//console.log(call(["file","read"]))
 
 exports.call = call;
