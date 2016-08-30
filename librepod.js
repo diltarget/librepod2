@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 express = require('express');
 config = require('./config.js');
 packages = require('./shell.js');
