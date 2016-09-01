@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 express = require('express');
 config = require('./config.js');
-packages = require('./shell.js');
+shell = require('./shell.js');
+apps = require('./interpreter.js');
 os = require('os');
 var app = express();
 var io = require('socket.io')(8001);
@@ -22,14 +23,14 @@ app.get('/',function(req, res){
 app.use('/editor',express.static(__dirname+"/test.html"));
 
 app.get('/api/interfaces',function(req,res){
-	res.send(packages.public)
+	res.send(apps.apps)
 });
 
 io.on('connection', function (socket) {
-	var my;
+	var my = new shell(console.log);
   socket.on('save', function (data) {
-	  my = undefined;
-	  my = new packages.shell(function(){
+	  my.kill();
+	  my = new shell(function(){
 		var args = Array.from(arguments);
 		args.shift();
 		socket.emit("debug",args);
